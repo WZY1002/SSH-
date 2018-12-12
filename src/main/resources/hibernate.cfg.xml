@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+    <property name="connection.driver_class">
+       com.mysql.jdbc.Driver	
+	 </property>
+    <property name="connection.url">
+       jdbc:mysql://localhost:3306/pl
+    </property>
+    <property name="connection.username">
+    	 root
+    </property>
+    <property name="connection.password">
+       123456
+    </property>
+
+    <!-- SQL dialect(方言) 用于生成不同
+    SQL数据库的SQL语句-->
+    <property name="dialect">
+    	org.hibernate.dialect.MySQL5Dialect
+    </property>
+	 <property name="show_sql">
+	 	true
+	 </property>
+	 <property name="format_sql">
+	 	true
+	 </property>
+	 
+	 <!-- 加载 映射文件(子配置文件) --> 	 
+	 <mapping resource="mapping/User.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>
+
+
+
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- 用于声明 实例类和表的映射关系
+    声明 属性和表中列(字段)的对应关系 -->
+    <class name="com.pl.model.TeachingworkEntity"
+           table="teachingwork">
+        <!-- id标签用于映射主键列 -->
+        <id name="id" column="id"></id>
+        <!-- property标签用于映射普通属性 -->
+        <property name="classid" column="classid"/>
+        <property name="courseid" column="courseid"/>
+        <property name="classhour" column="classhour"/>
+        <property name="classnumber" column="classnumber"/>
+        <property name="starttime" column="starttime"/>
+        <property name="endtime" column="endtime"/>
+        <property name="coursename" column="coursename"/>
+        <property name="classname" column="classname"/>
+        <property name="tid" column="tid"/>
+        <!--<property name="classCount" column="classCount"/>-->
+        <property name="status" column="status"/>
+    </class>
+</hibernate-mapping>

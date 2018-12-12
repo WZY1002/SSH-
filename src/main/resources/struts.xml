@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <!--管理员页面，传递信息数据-->
+    <package name="index" namespace="/index"  extends="struts-default">
+        <!--管理员导航主页面-->
+        <action name="index"  class="com.pl.action.IndexAction" method="homePage">
+            <!-- dispatcher 结果类型表示控制器执行结束以后转发到 JSP 页面 -->
+            <result type="dispatcher" name="data">
+                /jsp/index.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--教师导航主页面-->
+        <action name="teacherIndex"  class="com.pl.action.IndexAction" method="teacherHomePage">
+            <!-- dispatcher 结果类型表示控制器执行结束以后转发到 JSP 页面 -->
+            <result type="dispatcher" name="data">
+                /jsp/teacherIndex.jsp
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+        <!--教师页面 传数据体-->
+        <action name="teacherList" class="com.pl.action.TeacherAction" method="list">
+            <result type="dispatcher" name="data">
+                /jsp/teacherManage.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--论文管理 传递数据-->
+        <action name="thesisList" class="com.pl.action.ThesisAction" method="list">
+            <result type="dispatcher" name="data">
+                /jsp/thesisManage.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--项目管理 传递数据-->
+        <action name="projectList" class="com.pl.action.ProjectAction" method="list">
+            <result type="dispatcher" name="data">
+                /jsp/projectManage.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--专利管理 传递数据-->
+        <action name="patentList" class="com.pl.action.PatentAction" method="list">
+            <result type="dispatcher" name="data">
+                /jsp/patentManage.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--著作权管理 传递数据-->
+        <action name="copyrightList" class="com.pl.action.CopyrightAction" method="list">
+            <result type="dispatcher" name="data">
+                /jsp/copyrightManage.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--专著管理 传递数据-->
+        <action name="monographsList" class="com.pl.action.MonographsAction" method="list">
+            <result type="dispatcher" name="data">
+                /jsp/monographsManage.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--教师工作量管理 传递数据-->
+        <action name="teachingworkList" class="com.pl.action.TeachingworkAction" method="list">
+            <result type="dispatcher" name="data">
+                /jsp/teachingworkManage.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <action name="teachingwork" class="com.pl.action.TeachingworkAction" method="listByTeacher">
+            <result type="dispatcher" name="data">
+                /jsp/teachingworkList.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+
+        <!--校历管理 传递数据-->
+        <action name="calendarManager" class="com.pl.action.CalendarAction" method="dispatcher">
+            <result type="dispatcher" name="data">
+                /jsp/calendarManager.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+    </package>
+
+    <!--教师端页面-->
+    <package name="teacherIndex" namespace="/teacherIndex"  extends="struts-default">
+        <!--教师页面 传数据体-->
+        <action name="teacherInfo" class="com.pl.action.TeacherAction" method="teacherInfo">
+            <result type="dispatcher" name="data">
+                /jsp/teacherMsg.jsp
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+        <!--查看校历-->
+        <action name="calendar" class="com.pl.action.CalendarAction" method="dispatcher">
+            <result type="dispatcher" name="data">
+                /jsp/calendar.jsp
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+        <!--上传照片页面-->
+        <action name="uploadPhoto" class="com.pl.action.TeacherAction" method="teacherInfo">
+            <result type="dispatcher" name="data">
+                /jsp/uploadPhoto.jsp
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+        <!--查看自己的论文-->
+        <action name="thesisList" class="com.pl.action.ThesisAction" method="listByTeacher">
+            <result type="dispatcher" name="data">
+                /jsp/thesisListByTeacher.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--查看自己的项目-->
+        <action name="projectList" class="com.pl.action.ProjectAction" method="listByTeacher">
+            <result type="dispatcher" name="data">
+                /jsp/projectListByTeacher.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--查看自己的专利-->
+        <action name="patentList" class="com.pl.action.PatentAction" method="listByTeacher">
+            <result type="dispatcher" name="data">
+                /jsp/patentListByTeacher.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--查看自己的专著-->
+        <action name="monographsList" class="com.pl.action.MonographsAction" method="listByTeacher">
+            <result type="dispatcher" name="data">
+                /jsp/monographsListByTeacher.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--查看自己的专著权-->
+        <action name="copyrightList" class="com.pl.action.CopyrightAction" method="listByTeacher">
+            <result type="dispatcher" name="data">
+                /jsp/copyrightListByTeacher.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <!--查看自己的工作方案-->
+        <action name="teachingworkEntityList" class="com.pl.action.TeachingworkAction" method="listByTeacher">
+            <result type="dispatcher" name="data">
+                /jsp/teachingworkListByTeacher.jsp
+            </result>
+            <result name="error">
+                Login.html
+            </result>
+        </action>
+        <action name="teachingworkHistory" class="com.pl.action.TeachingworkAction" method="list">
+            <result type="dispatcher" name="data">
+                /jsp/teachingworkHistory.jsp
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+    </package>
+
+    <!--登录操作，传递json消息-->
+    <package name="user" namespace="/user" extends="json-default">
+        <action name="adminLogin" class="com.pl.action.UserAction" method="adminLogin">
+            <result name="success" type="json">
+                jsonResult
+            </result>
+        </action>
+        <action name="teacherLogin" class="com.pl.action.UserAction" method="teacherLogin">
+            <result name="success" type="json">
+                jsonResult
+            </result>
+        </action>
+    </package>
+
+    <!--教师管理,传递json数据-->
+    <package name="teacher" namespace="/teacher" extends="json-default">
+        <action name="add" class="com.pl.action.TeacherAction" method="add">
+            <result name="success" type="json">
+                jsonResult
+            </result>
+        </action>
+        <action name="delete" class="com.pl.action.TeacherAction" method="delete">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+        <action name="update" class="com.pl.action.TeacherAction" method="update">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+        <action name="uploadImg" class="com.pl.action.TeacherAction" method="uploadImg">
+            <result name="success" type="json">
+                jsonResult
+            </result>
+            <!--&lt;!&ndash; 限制图片的格式和图片的大小 &ndash;&gt;-->
+            <!--<interceptor-ref name="fileUpload">-->
+                <!--<param name="allowedTypes">-->
+                    <!--image/bmp,image/png,image/gif,image/jpeg,image/jpg-->
+                <!--</param>-->
+                <!--<param name="maximumSize">102400</param>-->
+            <!--</interceptor-ref>-->
+            <!--&lt;!&ndash; 默认的拦截器，必须要写 &ndash;&gt;-->
+            <!--<interceptor-ref name="defaultStack" />-->
+        </action>
+    </package>
+
+    <!--论文管理,传递json数据-->
+    <package name="thesis" namespace="/thesis" extends="json-default">
+        <action name="add" class="com.pl.action.ThesisAction" method="add">
+            <result name="success" type="json">
+                jsonResult
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+        <action name="update" class="com.pl.action.ThesisAction" method="update">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+        <action name="delete" class="com.pl.action.ThesisAction" method="delete">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+    </package>
+
+    <!--项目管理,传递json数据-->
+    <package name="project" namespace="/project" extends="json-default">
+        <action name="add" class="com.pl.action.ProjectAction" method="add">
+            <result name="success" type="json">
+                jsonResult
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+        <action name="update" class="com.pl.action.ProjectAction" method="update">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+        <action name="delete" class="com.pl.action.ProjectAction" method="delete">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+    </package>
+
+    <!--专利管理,传递json数据-->
+    <package name="patent" namespace="/patent" extends="json-default">
+        <action name="add" class="com.pl.action.PatentAction" method="add">
+            <result name="success" type="json">
+                jsonResult
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+        <action name="update" class="com.pl.action.PatentAction" method="update">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+        <action name="delete" class="com.pl.action.PatentAction" method="delete">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+    </package>
+
+    <!--著作管理,传递json数据-->
+    <package name="monographs" namespace="/monographs" extends="json-default">
+        <action name="add" class="com.pl.action.MonographsAction" method="add">
+            <result name="success" type="json">
+                jsonResult
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+        <action name="update" class="com.pl.action.MonographsAction" method="update">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+        <action name="delete" class="com.pl.action.MonographsAction" method="delete">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+    </package>
+
+    <!--著作权管理,传递json数据-->
+    <package name="copyright" namespace="/copyright" extends="json-default">
+        <action name="add" class="com.pl.action.CopyrightAction" method="add">
+            <result name="success" type="json">
+                jsonResult
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+        <action name="update" class="com.pl.action.CopyrightAction" method="update">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+        <action name="delete" class="com.pl.action.CopyrightAction" method="delete">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+    </package>
+
+    <!--工作方案管理,传递json数据-->
+    <package name="teachingwork" namespace="/teachingwork" extends="json-default">
+        <action name="add" class="com.pl.action.TeachingworkAction" method="add">
+            <result name="success" type="json">
+                jsonResult
+            </result>
+            <result name="error">
+                FgLogin.html
+            </result>
+        </action>
+        <action name="update" class="com.pl.action.TeachingworkAction" method="update">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+        <action name="delete" class="com.pl.action.TeachingworkAction" method="delete">
+            <result type="json" name="data">
+                jsonResult
+            </result>
+        </action>
+
+    </package>
+
+    <!--日历管理-->
+    <package name="calendar" namespace="/calendar" extends="json-default">
+        <action name="list" class="com.pl.action.CalendarAction" method="list">
+            <result name="data" type="json">
+                list
+            </result>
+        </action>
+        <action name="add" class="com.pl.action.CalendarAction" method="add">
+            <result name="data" type="json">
+                jsonResult
+            </result>
+        </action>
+        <action name="update" class="com.pl.action.CalendarAction" method="update">
+            <result name="data" type="json">
+                jsonResult
+            </result>
+        </action>
+        <action name="delete" class="com.pl.action.CalendarAction" method="delete">
+            <result name="data" type="json">
+                jsonResult
+            </result>
+        </action>
+    </package>
+</struts>
+
+
+
+
+
+
+
+
+
+
+

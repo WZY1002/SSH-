@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>客房信息</title>
+    <link href="~/Content/css/amazeui.datatables.min.css" rel="stylesheet" />
+    <link href="~/Content/css/amazeui.min.css" rel="stylesheet" />
+    <link href="~/Content/css/app.css" rel="stylesheet" />
+    <link href="~/Content/css/amazeui.page.css" rel="stylesheet" />
+    <link href="~/Content/css/amazeui.cropper.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/echarts.min.js"></script>
+    <script src="~/Content/js/amazeui.page.js"></script>
+    <script src="~/Content/js/amazeui.dialog.min.js"></script>
+    <script src="~/Content/js/paginator.js"></script>
+</head>
+<body>
+<script src="~/Content/js/theme.js"></script>
+<!--<input type="text" id="serpagesize" style="display:none;" value="@Model.Pagesize" />-->
+<!--<input id="Pagecount" type="text" style="display:none" value="@Model.Pagecount" />-->
+
+<div class="row">
+    <!--主题选择-->
+    <div class="tpl-skiner" style="display:none">
+        <div class="tpl-skiner-toggle am-icon-cog">
+        </div>
+        <div class="tpl-skiner-content">
+            <div class="tpl-skiner-content-title">
+                选择主题
+            </div>
+            <div class="tpl-skiner-content-bar">
+                <span class="skiner-color skiner-white" data-color="theme-white"></span>
+                <span class="skiner-color skiner-black" data-color="theme-black"></span>
+            </div>
+        </div>
+    </div>
+
+    <!--内容-->
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+        <div class="widget am-cf">
+            @*小标题*@
+            <div class="widget-head am-cf">
+                <div class="widget-title  am-cf">@title</div>
+            </div>
+            <div class="widget-body  am-fr">
+                @*添加/页面大小*@
+                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <div class="am-form-group">
+                        <div class="am-btn-toolbar">
+                            <div class="am-btn-group am-btn-group-xs">
+                                <button id="addroominfo" type="button" class="am-btn am-btn-primary" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 500, height: 400}"><span class="am-icon-plus"></span> 新增</button>
+
+                                @*弹出窗口*@
+                                <div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+                                    <div class="am-modal-dialog">
+                                        <div class="am-modal-hd">
+                                            <p style="color:black;">添加客房</p>
+                                            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+                                        </div>
+                                        <div class="am-modal-bd" style="color:black;">
+                                            <form class="am-form" id="form1" enctype="multipart/form-data">
+                                                <div class="am-form-group">
+                                                    <input type="text" id="adroomid" name="adroomid" placeholder="客房号(唯一)" required>
+                                                </div>
+                                                <div class="am-form-group">
+                                                    <input type="text" id="adroomphone" name="adroomphone" placeholder="客房电话号码(选填)">
+                                                </div>
+                                                <div class="am-form-group">
+                                                    <input type="text" id="adposition" name="adposition" placeholder="客房位置信息(选填)">
+                                                </div>
+                                                <div class="am-form-group">
+                                                    <select id="adroomtype" class="am-btn am-btn-default am-btn-secondary" style="color:black;">
+
+                                                    </select>
+                                                </div>
+                                                <div class="am-form-group">
+                                                    <select id="adstate" class="am-btn am-btn-default am-btn-secondary" style="color:black;">
+                                                        <option value="1" style="color:black;">启用</option>
+                                                        <option value="2" style="color:black;">维护中</option>
+                                                    </select>
+                                                </div>
+                                                <div class="am-form-group">
+                                                    <button type="button" class="am-btn am-btn-primary" onclick="validate()">确定</button>
+                                                    <button type="button" class="am-btn am-btn-warning " data-am-modal-close>取消</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*查看条数*@
+                                <select id="pages" class="am-btn am-btn-default am-btn-secondary">
+                                    <option value="10">查看10条</option>
+                                    <option value="15">查看15条</option>
+                                    <option value="20">查看20条</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*筛选类型*@
+                <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                    <div class="am-form-group tpl-table-list-select">
+                        <select id="selroomtype" data-am-selected="{btnWidth: '40%', btnSize: 'sm'}">
+                            <option value="">查看全部</option>
+                        </select>
+                    </div>
+                </div>
+                @*筛选内容*@
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                    <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                        <input id="selroomid" type="text" class="am-form-field " placeholder="客房ID">
+                        <span class="am-input-group-btn">
+                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button" onclick="addwhere()"></button>
+                            </span>
+                    </div>
+                </div>
+
+                @*数据表格*@
+                <div class="am-u-sm-12">
+                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>客房Id</th>
+                            <th>类型</th>
+                            <th>价格</th>
+                            <th>客房电话</th>
+                            <th>状态</th>
+                            <th>位置信息</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @{
+                        if (Model != null)
+                        {
+                        if (Model.Rows != null && Model.Rows.Length > 0)
+                        {
+                        for (int i = 0; i < Model.Rows.Length; i++)
+                        {
+                        if (i % 2 == 0)
+                        {
+                        <tr class="gradeX">
+                            <td>@Model.Rows[i].num</td>
+                            <td>@Model.Rows[i].roomid</td>
+                            <td>@Model.Rows[i].typename<span></span></td>
+                            <td>@Model.Rows[i].dayprice<span>(￥)</span></td>
+                            <td>@Model.Rows[i].roomphone<span></span></td>
+                            <td>@Model.Rows[i].roomstate<span></span></td>
+                            <td>@Model.Rows[i].position<span></span></td>
+                            <td>
+                                <div class="tpl-table-black-operation">
+                                    <a href="javascript:void(0);" onclick="EditRoominfo('@Model.Rows[i].roomid')" data-am-modal="{target: '#edit', closeViaDimmer: 0, width: 600, height: 450}">
+                                        <i class="am-icon-pencil"></i> 编辑
+                                    </a>
+                                    <a href="javascript:void(0);" onclick="DeleteRoominfo('@Model.Rows[i].roomid')" class="tpl-table-black-operation-del">
+                                        <i class="am-icon-trash"></i> 删除
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                        else
+                        {
+                        <tr class="even gradeC">
+                            <td>@Model.Rows[i].num</td>
+                            <td>@Model.Rows[i].roomid</td>
+                            <td>@Model.Rows[i].typename<span></span></td>
+                            <td>@Model.Rows[i].dayprice<span>(￥)</span></td>
+                            <td>@Model.Rows[i].roomphone<span></span></td>
+                            <td>@Model.Rows[i].roomstate<span></span></td>
+                            <td>@Model.Rows[i].position<span></span></td>
+                            <td>
+                                <div class="tpl-table-black-operation">
+                                    <a href="javascript:void(0);" onclick="EditRoominfo('@Model.Rows[i].roomid')" data-am-modal="{target: '#edit', closeViaDimmer: 0, width: 600, height: 450}">
+                                        <i class="am-icon-pencil"></i> 编辑
+                                    </a>
+                                    <a href="javascript:void(0);" onclick="DeleteRoominfo('@Model.Rows[i].roomid')" class="tpl-table-black-operation-del">
+                                        <i class="am-icon-trash"></i> 删除
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                        }
+                        }
+                        }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                @*编辑-弹出框*@
+                <div class="am-modal am-modal-no-btn" tabindex="-1" id="edit">
+                    <div class="am-modal-dialog">
+                        <div class="am-modal-hd">
+                            <p style="color:black;">编辑客房信息</p>
+                            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+                        </div>
+                        <div class="am-modal-bd" style="color:black;">
+                            <form class="am-form" id="editform" enctype="multipart/form-data">
+                                <div class="am-form-group">
+                                    <input type="text" id="edroomid" name="edroomid" placeholder="客房Id" required>
+                                </div>
+                                <div class="am-form-group">
+                                    <input type="text" id="edphone" name="edphone" placeholder="客房电话" required>
+                                </div>
+                                <div class="am-form-group">
+                                    <input type="text" id="edposition" name="edposition" placeholder="位置信息" required>
+                                </div>
+                                <div class="am-form-group">
+                                    <select id="edroomtype" class="am-btn am-btn-default am-btn-secondary" style="color:black;"></select>
+                                </div>
+                                <div class="am-form-group">
+                                    <select id="edroomstate" class="am-btn am-btn-default am-btn-secondary" style="color:black;">
+                                        <option value="1">启用</option>
+                                        <option value="2">维护中</option>
+                                    </select>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <button type="button" class="am-btn am-btn-primary" onclick="Update()">确定</button>
+                                    <button type="button" class="am-btn am-btn-warning " data-am-modal-close>取消</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                @*分页*@
+                <div class="am-u-lg-12 am-cf">
+                    <div class="am-fr">
+                        <ul class="am-pagination tpl-pagination">
+                            <li id="faahead"><a href="javascript:void(0);" onclick="ahead()">«</a></li>
+                            <li id="fanext"><a href="javascript:void(0);" onclick="next()">»</a></li>
+                            <div id="tips">当前第<span id="nowpage">@Model.Currpage</span>页,共<span id="pagecount1">@Model.Pagecount</span>页</div>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Content/js/amazeui.datatables.min.js"></script>
+<script src="~/Content/js/amazeui.min.js"></script>
+<script src="~/Content/js/app.js"></script>
+<script src="~/Content/js/dataTables.responsive.min.js"></script>
+</body>
+</html>
+<script src="~/Content/js/Common.js"></script>
+<script type="text/javascript">
+    $(function () {
+//        Getpage();
+    });
+    function ahead() {
+        doahead();
+    };
+    function next()
+    {
+        donext();
+    }
+
+    //按页面大小和页码请求数据
+    function GetManager(pagesize, nowpage) {
+        location.href = "/Room/RoomType?pagesize=" + pagesize + "&nowpage=" + nowpage;
+    }
+
+    //选择页面大小
+    $("#pages").change(function () {
+        var nowpage = Number($("#nowpage").html());
+        var pagesize = $("#pages").val();//获取页面大小
+        location.href = "/Room/RoomType?pagesize=" + pagesize + "&nowpage=" + nowpage;
+    });
+
+    //筛选条件
+    function addwhere()
+    {
+        var roomid = $("#selroomid").val();
+        var roomtype = $("#selroomtype").val();
+        var nowpage = Number($("#nowpage").html());
+        var pagesize = $("#pages").val();
+        location.href = "/Room/Roominfo?pagesize=" + pagesize + "&nowpage=" + nowpage + "&type=" + roomtype + "&roomid=" + roomid;
+    }
+
+    //添加表单验证
+    function validate() {
+        var adroomid = $("#adroomid").val();
+        var adroomphone = $("#adroomphone").val();
+        var adposition = $("#adposition").val();
+        var adroomtype = $("#adroomtype").val();
+        var adstate = $("#adstate").val();
+        if (adroomid.length == 0)
+        {
+            alert("客房号不能为空", "提示");
+            return false;
+        }
+        //添加客房类型
+        Senddata("/Room/AddRoominfo", { 'roomid': adroomid, 'roomphone': adroomphone, 'typeid': adroomtype, "roomstate": adstate, "position": adposition});
+    }
+
+    //获取编辑信息
+    function EditRoominfo(roomid)
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/Room/EditRoominfo',
+            data: { 'roomid': roomid },
+            dataType: 'json',
+            success: function (data)
+            {
+                $("#edroomid").val(data.roomid);
+                $("#edroomstate").val(data.roomstate);
+                $("#edphone").val(data.roomphone);
+                $("#edroomtype").val(data.typeid);
+                $("#edposition").val(data.position);
+            }
+        })
+    }
+    //更新信息
+    function Update()
+    {
+        var edroomid = $("#edroomid").val();
+        var edroomtype = $("#edroomtype").val();
+        var edphone = $("#edphone").val();
+        var edroomstate = $("#edroomstate").val();
+        var edposition = $("#edposition").val();
+        if (edroomid.length == 0) {
+            alert("客房号不能为空", "提示");
+            return false;
+        }
+        else if (edroomtype.length == 0) {
+            alert("客房类型不能为空", "提示");
+            return false;
+        }
+        var eddata = { 'roomid': edroomid, 'typeid': edroomtype, 'roomphone': edphone, 'roomstate': edroomstate, 'position': edposition };
+        Senddata('/Room/UpdateRoominfo', eddata);
+    }
+    //删除
+    function DeleteTeacher(roomid)
+    {
+        var a=confirm("你确定要删？");
+        if (a == true) {
+            DeleteDate('/Room/DeleteRoominfo', roomid);
+        }
+    }
+
+</script>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- 用于声明 实例类和表的映射关系
+    声明 属性和表中列(字段)的对应关系 -->
+    <class name="com.pl.model.CalendarEntiy"
+           table="calendar">
+        <!-- id标签用于映射主键列 -->
+        <id name="id" column="id"></id>
+        <!-- property标签用于映射普通属性 -->
+        <property name="title" column="title"/>
+        <property name="start" column="start"/>
+        <property name="end" column="end"/>
+    </class>
+</hibernate-mapping>
